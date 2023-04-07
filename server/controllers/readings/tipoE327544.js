@@ -28,7 +28,7 @@ const getLatestTipoE327544 = async (req, res) => {
 }
 
 const getAllTipoE327544 = async (req, res) => {
-  const readings = await TipoE327544.find()
+  const readings = await TipoE327544.find().sort("-createdAt")
   res.status(StatusCodes.OK).json({ readings })
 }
 

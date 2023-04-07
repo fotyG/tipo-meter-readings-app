@@ -30,7 +30,7 @@ const getLatestTipoE = async (req, res) => {
 }
 
 const getAllTipoE = async (req, res) => {
-  const readings = await TipoElectricity.find()
+  const readings = await TipoElectricity.find().sort("-createdAt")
   res.status(StatusCodes.OK).json({readings})
 }
 

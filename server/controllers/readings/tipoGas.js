@@ -30,7 +30,7 @@ const getLatestTipoG = async (req, res) => {
 }
 
 const getAllTipoG = async (req, res) => {
-  const readings = await TipoGas.find()
+  const readings = await TipoGas.find().sort("-createdAt")
   res.status(StatusCodes.OK).json({ readings })
 }
 

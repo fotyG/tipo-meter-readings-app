@@ -28,7 +28,7 @@ const getLatestMazgatavaElectricity = async (req, res) => {
 }
 
 const getAllMazgatavaElectricity = async (req, res) => {
-  const readings = await MazgatavaElectricity.find()
+  const readings = await MazgatavaElectricity.find().sort("-createdAt")
   res.status(StatusCodes.OK).json({ readings })
 }
 

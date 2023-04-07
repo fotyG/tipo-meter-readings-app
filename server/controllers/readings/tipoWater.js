@@ -28,7 +28,7 @@ const getLatestTipoW = async (req, res) => {
 }
 
 const getAllTipoW = async (req, res) => {
-  const readings = await TipoWater.find()
+  const readings = await TipoWater.find().sort("-createdAt")
   res.status(StatusCodes.OK).json({ readings })
 }
 

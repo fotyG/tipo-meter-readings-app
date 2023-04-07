@@ -30,7 +30,7 @@ const getLatestMajaGas = async (req, res) => {
 }
 
 const getAllMajaGas = async (req, res) => {
-  const readings = await MajaGas.find()
+  const readings = await MajaGas.find().sort("-createdAt")
   res.status(StatusCodes.OK).json({ readings })
 }
 

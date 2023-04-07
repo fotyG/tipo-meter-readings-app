@@ -28,7 +28,7 @@ const getLatestTipoESanitex = async (req, res) => {
 }
 
 const getAllTipoESanitex = async (req, res) => {
-  const readings = await TipoESanitex.find()
+  const readings = await TipoESanitex.find().sort("-createdAt")
   res.status(StatusCodes.OK).json({ readings })
 }
 

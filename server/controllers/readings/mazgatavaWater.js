@@ -30,7 +30,7 @@ const getLatestMazgatavaWater = async (req, res) => {
 }
 
 const getAllMazgatavaWater = async (req, res) => {
-  const readings = await MazgatavaWater.find()
+  const readings = await MazgatavaWater.find().sort("-createdAt")
   res.status(StatusCodes.OK).json({ readings })
 }
 

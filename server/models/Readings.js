@@ -16,10 +16,18 @@ const TipoESchema = new mongoose.Schema(
       type: Number,
       required: [true, "Please provide reading"],
     },
+    consumption: Number,
     client: String,
   },
   { timestamps: true }
 )
+TipoESchema.pre("save", async function () {
+const previousDoc = await this.constructor.findOne().sort("-createdAt")
+
+if (previousDoc) {
+  this.consumption = this.reading - previousDoc.reading
+}
+})
 
 const TipoGSchema = new mongoose.Schema(
   {
@@ -41,6 +49,14 @@ const TipoGSchema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+TipoGSchema.pre("save", async function () {
+  const previousDoc = await this.constructor.findOne().sort("-createdAt")
+
+  if (previousDoc) {
+    this.consumption = this.reading - previousDoc.reading
+  }
+})
+
 
 const TipoWSchema = new mongoose.Schema(
   {
@@ -68,6 +84,13 @@ const TipoWSchema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+TipoWSchema.pre("save", async function () {
+  const previousDoc = await this.constructor.findOne().sort("-createdAt")
+
+  if (previousDoc) {
+    this.consumption = this.reading - previousDoc.reading
+  }
+})
 
 const TipoE48865026Schema = new mongoose.Schema(
   {
@@ -92,6 +115,14 @@ const TipoE48865026Schema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+TipoE48865026Schema.pre("save", async function () {
+  const previousDoc = await this.constructor.findOne().sort("-createdAt")
+
+  if (previousDoc) {
+    this.consumption = this.reading - previousDoc.reading
+  }
+})
+
 const TipoE0281935Schema = new mongoose.Schema(
   {
     property: {
@@ -115,6 +146,14 @@ const TipoE0281935Schema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+TipoE0281935Schema.pre("save", async function () {
+  const previousDoc = await this.constructor.findOne().sort("-createdAt")
+
+  if (previousDoc) {
+    this.consumption = this.reading - previousDoc.reading
+  }
+})
+
 const TipoE32878714Schema = new mongoose.Schema(
   {
     property: {
@@ -138,6 +177,13 @@ const TipoE32878714Schema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+TipoE32878714Schema.pre("save", async function () {
+  const previousDoc = await this.constructor.findOne().sort("-createdAt")
+
+  if (previousDoc) {
+    this.consumption = this.reading - previousDoc.reading
+  }
+})
 
 const TipoE0282274Schema = new mongoose.Schema(
   {
@@ -162,6 +208,13 @@ const TipoE0282274Schema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+TipoE0282274Schema.pre("save", async function () {
+  const previousDoc = await this.constructor.findOne().sort("-createdAt")
+
+  if (previousDoc) {
+    this.consumption = this.reading - previousDoc.reading
+  }
+})
 
 const TipoE0281679Schema = new mongoose.Schema(
   {
@@ -186,6 +239,13 @@ const TipoE0281679Schema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+TipoE0281679Schema.pre("save", async function () {
+  const previousDoc = await this.constructor.findOne().sort("-createdAt")
+
+  if (previousDoc) {
+    this.consumption = this.reading - previousDoc.reading
+  }
+})
 
 const TipoE0282269_33067590Schema = new mongoose.Schema(
   {
@@ -210,6 +270,13 @@ const TipoE0282269_33067590Schema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+TipoE0282269_33067590Schema.pre("save", async function () {
+  const previousDoc = await this.constructor.findOne().sort("-createdAt")
+
+  if (previousDoc) {
+    this.consumption = this.reading - previousDoc.reading
+  }
+})
 
 const TipoE0281803Schema = new mongoose.Schema(
   {
@@ -234,6 +301,14 @@ const TipoE0281803Schema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+TipoE0281803Schema.pre("save", async function () {
+  const previousDoc = await this.constructor.findOne().sort("-createdAt")
+
+  if (previousDoc) {
+    this.consumption = this.reading - previousDoc.reading
+  }
+})
+
 const TipoE0281748Schema = new mongoose.Schema(
   {
     property: {
@@ -257,6 +332,13 @@ const TipoE0281748Schema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+TipoE0281748Schema.pre("save", async function () {
+  const previousDoc = await this.constructor.findOne().sort("-createdAt")
+
+  if (previousDoc) {
+    this.consumption = this.reading - previousDoc.reading
+  }
+})
 
 const TipoE0281934Schema = new mongoose.Schema(
   {
@@ -281,6 +363,13 @@ const TipoE0281934Schema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+TipoE0281934Schema.pre("save", async function () {
+  const previousDoc = await this.constructor.findOne().sort("-createdAt")
+
+  if (previousDoc) {
+    this.consumption = this.reading - previousDoc.reading
+  }
+})
 
 const TipoE042268Schema = new mongoose.Schema(
   {
@@ -305,6 +394,13 @@ const TipoE042268Schema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+TipoE042268Schema.pre("save", async function () {
+  const previousDoc = await this.constructor.findOne().sort("-createdAt")
+
+  if (previousDoc) {
+    this.consumption = this.reading - previousDoc.reading
+  }
+})
 
 const TipoE0882410Schema = new mongoose.Schema(
   {
@@ -329,6 +425,13 @@ const TipoE0882410Schema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+TipoE0882410Schema.pre("save", async function () {
+  const previousDoc = await this.constructor.findOne().sort("-createdAt")
+
+  if (previousDoc) {
+    this.consumption = this.reading - previousDoc.reading
+  }
+})
 
 const TipoE327544Schema = new mongoose.Schema(
   {
@@ -353,6 +456,13 @@ const TipoE327544Schema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+TipoE327544Schema.pre("save", async function () {
+  const previousDoc = await this.constructor.findOne().sort("-createdAt")
+
+  if (previousDoc) {
+    this.consumption = this.reading - previousDoc.reading
+  }
+})
 
 const TipoE0282299Schema = new mongoose.Schema(
   {
@@ -377,6 +487,13 @@ const TipoE0282299Schema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+TipoE0282299Schema.pre("save", async function () {
+  const previousDoc = await this.constructor.findOne().sort("-createdAt")
+
+  if (previousDoc) {
+    this.consumption = this.reading - previousDoc.reading
+  }
+})
 
 const TipoE004165Schema = new mongoose.Schema(
   {
@@ -401,6 +518,13 @@ const TipoE004165Schema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+TipoE004165Schema.pre("save", async function () {
+  const previousDoc = await this.constructor.findOne().sort("-createdAt")
+
+  if (previousDoc) {
+    this.consumption = this.reading - previousDoc.reading
+  }
+})
 
 const TipoESanitexSchema = new mongoose.Schema(
   {
@@ -425,6 +549,13 @@ const TipoESanitexSchema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+TipoESanitexSchema.pre("save", async function () {
+  const previousDoc = await this.constructor.findOne().sort("-createdAt")
+
+  if (previousDoc) {
+    this.consumption = this.reading - previousDoc.reading
+  }
+})
 
 const MajaESchema = new mongoose.Schema(
   {
@@ -446,6 +577,13 @@ const MajaESchema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+MajaESchema.pre("save", async function () {
+  const previousDoc = await this.constructor.findOne().sort("-createdAt")
+
+  if (previousDoc) {
+    this.consumption = this.reading - previousDoc.reading
+  }
+})
 
 const MajaGSchema = new mongoose.Schema(
   {
@@ -467,6 +605,13 @@ const MajaGSchema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+MajaGSchema.pre("save", async function () {
+  const previousDoc = await this.constructor.findOne().sort("-createdAt")
+
+  if (previousDoc) {
+    this.consumption = this.reading - previousDoc.reading
+  }
+})
 
 const MajaWSchema = new mongoose.Schema(
   {
@@ -488,6 +633,13 @@ const MajaWSchema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+MajaWSchema.pre("save", async function () {
+  const previousDoc = await this.constructor.findOne().sort("-createdAt")
+
+  if (previousDoc) {
+    this.consumption = this.reading - previousDoc.reading
+  }
+})
 
 const MajaKSchema = new mongoose.Schema(
   {
@@ -509,6 +661,13 @@ const MajaKSchema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+MajaKSchema.pre("save", async function () {
+  const previousDoc = await this.constructor.findOne().sort("-createdAt")
+
+  if (previousDoc) {
+    this.consumption = this.reading - previousDoc.reading
+  }
+})
 
 const MazgatavaESchema = new mongoose.Schema(
   {
@@ -530,6 +689,13 @@ const MazgatavaESchema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+MazgatavaESchema.pre("save", async function () {
+  const previousDoc = await this.constructor.findOne().sort("-createdAt")
+
+  if (previousDoc) {
+    this.consumption = this.reading - previousDoc.reading
+  }
+})
 
 const MazgatavaWSchema = new mongoose.Schema(
   {
@@ -551,6 +717,13 @@ const MazgatavaWSchema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+MazgatavaWSchema.pre("save", async function () {
+  const previousDoc = await this.constructor.findOne().sort("-createdAt")
+
+  if (previousDoc) {
+    this.consumption = this.reading - previousDoc.reading
+  }
+})
 
 const MazgatavaKSchema = new mongoose.Schema(
   {
@@ -572,6 +745,13 @@ const MazgatavaKSchema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+MazgatavaKSchema.pre("save", async function () {
+  const previousDoc = await this.constructor.findOne().sort("-createdAt")
+
+  if (previousDoc) {
+    this.consumption = this.reading - previousDoc.reading
+  }
+})
 
 /* #1 */ const TipoElectricity = mongoose.model("TipoElectricity", TipoESchema)
 /* #2 */ const TipoGas = mongoose.model("TipoGas", TipoGSchema)

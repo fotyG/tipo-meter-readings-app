@@ -28,7 +28,7 @@ const getLatestMajaWater = async (req, res) => {
 }
 
 const getAllMajaWater = async (req, res) => {
-  const readings = await MajaWater.find()
+  const readings = await MajaWater.find().sort("-createdAt")
   res.status(StatusCodes.OK).json({ readings })
 }
 

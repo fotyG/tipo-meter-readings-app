@@ -28,7 +28,7 @@ const getLatestMajaElectricity = async (req, res) => {
 }
 
 const getAllMajaElectricity = async (req, res) => {
-  const readings = await MajaElectricity.find()
+  const readings = await MajaElectricity.find().sort("-createdAt")
   res.status(StatusCodes.OK).json({ readings })
 }
 

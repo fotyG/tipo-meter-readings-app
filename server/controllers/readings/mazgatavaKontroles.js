@@ -28,7 +28,7 @@ const getLatestMazgatavaKontroles = async (req, res) => {
 }
 
 const getAllMazgatavaKontroles = async (req, res) => {
-  const readings = await MazgatavaKontroles.find()
+  const readings = await MazgatavaKontroles.find().sort("-createdAt")
   res.status(StatusCodes.OK).json({ readings })
 }
 

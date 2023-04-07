@@ -28,7 +28,7 @@ const getLatestMajaKontroles = async (req, res) => {
 }
 
 const getAllMajaKontroles = async (req, res) => {
-  const readings = await MajaKontroles.find()
+  const readings = await MajaKontroles.find().sort("-createdAt")
   res.status(StatusCodes.OK).json({ readings })
 }
 
