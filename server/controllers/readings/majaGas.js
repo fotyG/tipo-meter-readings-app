@@ -34,8 +34,18 @@ const getAllMajaGas = async (req, res) => {
   res.status(StatusCodes.OK).json({ readings })
 }
 
+const deleteMajaGas = async (req, res) => {
+  try {
+    const deletedItem = await MajaGas.findByIdAndDelete(req.params.id)
+    res.status(StatusCodes.NO_CONTENT).json({ msg: "Reading Deleted" })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   createMajaGas,
   getLatestMajaGas,
   getAllMajaGas,
+  deleteMajaGas,
 }

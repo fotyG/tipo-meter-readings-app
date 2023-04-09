@@ -32,8 +32,20 @@ const getAllMazgatavaElectricity = async (req, res) => {
   res.status(StatusCodes.OK).json({ readings })
 }
 
+const deleteMazgatavaElectricity = async (req, res) => {
+  try {
+    const deletedItem = await MazgatavaElectricity.findByIdAndDelete(
+      req.params.id
+    )
+    res.status(StatusCodes.NO_CONTENT).json({ msg: "Reading Deleted" })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   createMazgatavaElectricity,
   getLatestMazgatavaElectricity,
   getAllMazgatavaElectricity,
+  deleteMazgatavaElectricity,
 }

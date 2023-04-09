@@ -60,7 +60,7 @@ app.post("/api/v1/logout", (req, res) => {
 app.use("/api/v1/auth", authRouter)
 app.use(
   "/api/v1/readings",
-  // authenticateUser,
+  authenticateUser,
   tipoERouter,
   tipoGRouter,
   tipoWRouter,

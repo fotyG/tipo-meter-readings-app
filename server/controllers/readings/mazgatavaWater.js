@@ -34,8 +34,18 @@ const getAllMazgatavaWater = async (req, res) => {
   res.status(StatusCodes.OK).json({ readings })
 }
 
+const deleteMazgatavaWater = async (req, res) => {
+  try {
+    const deletedItem = await MazgatavaWater.findByIdAndDelete(req.params.id)
+    res.status(StatusCodes.NO_CONTENT).json({ msg: "Reading Deleted" })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   createMazgatavaWater,
   getLatestMazgatavaWater,
   getAllMazgatavaWater,
+  deleteMazgatavaWater,
 }

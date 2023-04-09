@@ -5,6 +5,7 @@ const {
   createMajaGas,
   getLatestMajaGas,
   getAllMajaGas,
+  deleteMajaGas,
 } = require("../../controllers/readings/majaGas")
 
 router
@@ -12,5 +13,6 @@ router
   .post(createMajaGas)
   .get(getAllMajaGas)
 router.route("/MajaGas/latest").get(getLatestMajaGas)
+router.route("/MajaGas/:id").delete(deleteMajaGas)
 
 module.exports = router

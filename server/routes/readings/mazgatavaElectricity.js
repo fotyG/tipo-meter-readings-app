@@ -5,6 +5,7 @@ const {
   createMazgatavaElectricity,
   getLatestMazgatavaElectricity,
   getAllMazgatavaElectricity,
+  deleteMazgatavaElectricity,
 } = require("../../controllers/readings/mazgatavaElectricity")
 
 router
@@ -12,5 +13,6 @@ router
   .post(createMazgatavaElectricity)
   .get(getAllMazgatavaElectricity)
 router.route("/MazgatavaElectricity/latest").get(getLatestMazgatavaElectricity)
+router.route("/MazgatavaElectricity/:id").delete(deleteMazgatavaElectricity)
 
 module.exports = router

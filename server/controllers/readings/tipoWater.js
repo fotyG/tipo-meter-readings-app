@@ -32,4 +32,13 @@ const getAllTipoW = async (req, res) => {
   res.status(StatusCodes.OK).json({ readings })
 }
 
-module.exports = { createTipoW, getLatestTipoW, getAllTipoW }
+const deleteTipoW = async (req, res) => {
+  try {
+    const deletedItem = await TipoWater.findByIdAndDelete(req.params.id)
+    res.status(StatusCodes.NO_CONTENT).json({ msg: "Reading Deleted" })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+module.exports = { createTipoW, getLatestTipoW, getAllTipoW, deleteTipoW }

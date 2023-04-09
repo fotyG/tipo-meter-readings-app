@@ -32,8 +32,18 @@ const getAllTipoESanitex = async (req, res) => {
   res.status(StatusCodes.OK).json({ readings })
 }
 
+const deleteTipoESanitex = async (req, res) => {
+  try {
+    const deletedItem = await TipoESanitex.findByIdAndDelete(req.params.id)
+    res.status(StatusCodes.NO_CONTENT).json({ msg: "Reading Deleted" })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   createTipoESanitex,
   getLatestTipoESanitex,
   getAllTipoESanitex,
+  deleteTipoESanitex,
 }

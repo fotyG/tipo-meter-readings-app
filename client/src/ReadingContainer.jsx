@@ -1,12 +1,16 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Reading from "./Reading"
 import Modal from "./Modal"
+import DeleteConfirmationModal from "./DeleteConfirmationModal"
 
 const ReadingContainer = () => {
   const [chosenMeter, setChosenMeter] = useState(false)
   const [url, setUrl] = useState("latest")
   const [modal, setModal] = useState(false)
+  const [deleteModal, setDeleteModal] = useState(false)
   const [readingForMeter, setReadingForMeter] = useState(false)
+  const [chosenReading, setChosenReading] = useState(false)
+  const [readingDeleted, setReadingDeleted] = useState(false)
 
   const handleMeterClick = (meter) => {
     if (!chosenMeter) {
@@ -20,12 +24,30 @@ const ReadingContainer = () => {
 
   const handleAddNewReading = (meter) => {
     setReadingForMeter(meter)
-    console.log(meter)
     setModal(true)
   }
 
   const closeModal = () => {
     setModal(false)
+  }
+  const closeDeleteModal = () => {
+    setDeleteModal(false)
+  }
+
+  const openDeleteModal = (meter,id) => {
+    setDeleteModal(true)
+    setReadingForMeter(meter)
+    setChosenReading(id)
+  }
+
+  useEffect(()=>{
+    if(readingDeleted) {
+      setReadingDeleted(false)
+    }
+  }, [readingDeleted])
+
+  const notifyReadingDelete = () => {
+    setReadingDeleted(true)
   }
 
   return (
@@ -41,12 +63,22 @@ const ReadingContainer = () => {
         <h4 className="">Skaitītāja Nr.</h4>
         <h4 className="">Darbības</h4>
       </div>
+      {deleteModal && (
+        <DeleteConfirmationModal
+          closeDeleteModal={closeDeleteModal}
+          chosenReading={chosenReading}
+          skaititajs={readingForMeter}
+          notifyReadingDelete={notifyReadingDelete}
+        />
+      )}
       {modal && <Modal skaititajs={readingForMeter} closeModal={closeModal} />}
       {chosenMeter ? (
         <Reading
           skaititajs={chosenMeter}
           url={url}
           handleMeterClick={handleMeterClick}
+          openDeleteModal={openDeleteModal}
+          notifyReadingDelete={notifyReadingDelete}
         />
       ) : (
         <>

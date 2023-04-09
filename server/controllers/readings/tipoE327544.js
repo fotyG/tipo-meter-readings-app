@@ -32,8 +32,18 @@ const getAllTipoE327544 = async (req, res) => {
   res.status(StatusCodes.OK).json({ readings })
 }
 
+const deleteTipoE327544 = async (req, res) => {
+  try {
+    const deletedItem = await TipoE327544.findByIdAndDelete(req.params.id)
+    res.status(StatusCodes.NO_CONTENT).json({ msg: "Reading Deleted" })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   createTipoE327544,
   getLatestTipoE327544,
   getAllTipoE327544,
+  deleteTipoE327544,
 }

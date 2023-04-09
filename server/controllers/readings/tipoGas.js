@@ -34,4 +34,13 @@ const getAllTipoG = async (req, res) => {
   res.status(StatusCodes.OK).json({ readings })
 }
 
-module.exports = { createTipoG, getLatestTipoG, getAllTipoG }
+const deleteTipoG = async (req, res) => {
+  try {
+    const deletedItem = await TipoGas.findByIdAndDelete(req.params.id)
+    res.status(StatusCodes.NO_CONTENT).json({ msg: "Reading Deleted" })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+module.exports = { createTipoG, getLatestTipoG, getAllTipoG, deleteTipoG }

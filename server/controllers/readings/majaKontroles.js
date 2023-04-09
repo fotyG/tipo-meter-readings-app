@@ -32,8 +32,18 @@ const getAllMajaKontroles = async (req, res) => {
   res.status(StatusCodes.OK).json({ readings })
 }
 
+const deleteMajaKontroles = async (req, res) => {
+  try {
+    const deletedItem = await MajaKontroles.findByIdAndDelete(req.params.id)
+    res.status(StatusCodes.NO_CONTENT).json({ msg: "Reading Deleted" })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   createMajaKontroles,
   getLatestMajaKontroles,
   getAllMajaKontroles,
+  deleteMajaKontroles,
 }

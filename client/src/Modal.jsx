@@ -11,13 +11,11 @@ const Modal = ({ closeModal, skaititajs }) => {
   const [property, setProperty] = useState("")
   const [location, setLocation] = useState("")
   const [meter, setMeter] = useState("")
-  
 
   useEffect(() => {
     const fetchReadingData = async () => {
       try {
         const response = await axios.get(`/readings/${skaititajs}/latest`)
-        console.log(response.data.latest)
         setReadingPH(response.data.latest.reading)
         setReading(response.data.latest.reading)
         setClientPH(response.data.latest.client || "-")
@@ -27,7 +25,6 @@ const Modal = ({ closeModal, skaititajs }) => {
         setProperty(response.data.latest.property || "")
         setLocation(response.data.latest.pavilion || "")
         setMeter(response.data.latest.meter || "")
-
       } catch (error) {
         console.log(error)
       }
@@ -36,7 +33,7 @@ const Modal = ({ closeModal, skaititajs }) => {
   }, [])
 
   const handleReadingChange = (e) => {
-    const newReading = parseInt(e.target.value)
+    const newReading = e.target.value
     setReading(newReading)
     setConsumption(newReading - readingPH)
   }
@@ -52,7 +49,7 @@ const Modal = ({ closeModal, skaititajs }) => {
         reading,
         client,
       })
-      if(request) {
+      if (request) {
         closeModal()
       }
     } catch (error) {
@@ -91,12 +88,14 @@ const Modal = ({ closeModal, skaititajs }) => {
                 type="text"
                 placeholder={clientPH}
                 value={client}
+                onChange={(e) => setClient(e.target.value)}
               />
             </div>
             <div className="flex justify-between items-center">
               <label htmlFor="paterins">Patērīņš:</label>
               <input
                 disabled
+                readOnly
                 className="block text-center m-2 p-1 rounded"
                 type="text"
                 placeholder={consumption}
@@ -107,6 +106,7 @@ const Modal = ({ closeModal, skaititajs }) => {
               <label htmlFor="tips">Tips:</label>
               <input
                 disabled
+                readOnly
                 className="block text-center m-2 p-1 rounded"
                 type="text"
                 placeholder={type}
@@ -117,6 +117,7 @@ const Modal = ({ closeModal, skaititajs }) => {
               <label htmlFor="objekts">Objekts:</label>
               <input
                 disabled
+                readOnly
                 className="block text-center m-2 p-1 rounded"
                 type="text"
                 placeholder={property}
@@ -127,6 +128,7 @@ const Modal = ({ closeModal, skaititajs }) => {
               <label htmlFor="lokacija">Lokācija:</label>
               <input
                 disabled
+                readOnly
                 className="block text-center m-2 p-1 rounded"
                 type="text"
                 placeholder={location}
@@ -137,13 +139,17 @@ const Modal = ({ closeModal, skaititajs }) => {
               <label htmlFor="skaititajaNr">Skaitītāja Nr.</label>
               <input
                 disabled
+                readOnly
                 className="block text-center m-2 p-1 rounded"
                 type="text"
                 placeholder={meter}
                 value={meter}
               />
             </div>
-            <button className="block mx-auto border border-teal-950 px-3 py-1 rounded-md text-teal-950 hover:bg-purple-300 transition-all shadow-md mt-3" onClick={(e)=> handleSubmit(e)}>
+            <button
+              className="block mx-auto border border-teal-950 px-3 py-1 rounded-md text-teal-950 hover:bg-purple-300 transition-all shadow-md mt-3"
+              onClick={(e) => handleSubmit(e)}
+            >
               Iesniegt
             </button>
           </form>

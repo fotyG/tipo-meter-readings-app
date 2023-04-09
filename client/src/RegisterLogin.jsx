@@ -49,7 +49,7 @@ const RegisterLogin = () => {
             onChange={(e) => setUsername(e.target.value)}
           />
           <input
-            type="text"
+            type="password"
             placeholder="password"
             className="block w-full p-2 mb-4 rounded-md text-blue-950 outline-blue-500"
             value={password}
