@@ -43,9 +43,32 @@ const deleteMazgatavaKontroles = async (req, res) => {
   }
 }
 
+const editMazgatavaKontroles = async (req, res) => {
+  try {
+    const editedItem = await MazgatavaKontroles.findByIdAndUpdate(
+      req.params.id,
+      req.body
+    )
+    res.status(StatusCodes.OK).json({ msg: "Reading Edited" })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const getOneMazgatavaKontroles = async (req, res) => {
+  try {
+    const oneReading = await MazgatavaKontroles.findById(req.params.id)
+    res.status(StatusCodes.OK).json(oneReading)
+  } catch (error) {
+    res.status(StatusCodes.BAD_REQUEST).json({ msg: "Reading Not Found" })
+  }
+}
+
 module.exports = {
   createMazgatavaKontroles,
   getLatestMazgatavaKontroles,
   getAllMazgatavaKontroles,
   deleteMazgatavaKontroles,
+  editMazgatavaKontroles,
+  getOneMazgatavaKontroles,
 }

@@ -16,8 +16,8 @@ const Dashboard = () => {
   },[])
   return (
     <>
-    <NavBar/>
-    <ReadingContainer/>
+      <NavBar />
+      <ReadingContainer />
     </>
   )
 }

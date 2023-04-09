@@ -11,6 +11,7 @@ const ReadingContainer = () => {
   const [readingForMeter, setReadingForMeter] = useState(false)
   const [chosenReading, setChosenReading] = useState(false)
   const [readingDeleted, setReadingDeleted] = useState(false)
+  const [editMode, setEditMode] = useState(false)
 
   const handleMeterClick = (meter) => {
     if (!chosenMeter) {
@@ -22,8 +23,15 @@ const ReadingContainer = () => {
     }
   }
 
-  const handleAddNewReading = (meter) => {
+  const handleAddNewReadingOrEdit = (meter, id) => {
     setReadingForMeter(meter)
+    if(id) {
+      setChosenReading(id)
+      setEditMode(true)
+    }
+    if(!id) {
+      setEditMode(false)
+    }
     setModal(true)
   }
 
@@ -51,17 +59,17 @@ const ReadingContainer = () => {
   }
 
   return (
-    <div className="bg-violet-50 h-screen">
+    <div className="">
       <div className="grid grid-cols-9 p-2 text-teal-950 text-center border-b-gray-400 border-solid border font-bold">
-        <h4 className="">Datums</h4>
-        <h4 className="">Rādījums</h4>
-        <h4 className="">Patēriņš</h4>
-        <h4 className="">Klients</h4>
-        <h4 className="">Tips</h4>
-        <h4 className="">Objekts</h4>
-        <h4 className="">Lokācija</h4>
-        <h4 className="">Skaitītāja Nr.</h4>
-        <h4 className="">Darbības</h4>
+        <h4>Datums</h4>
+        <h4>Rādījums</h4>
+        <h4>Patēriņš</h4>
+        <h4>Klients</h4>
+        <h4>Tips</h4>
+        <h4>Objekts</h4>
+        <h4>Lokācija</h4>
+        <h4>Skaitītāja Nr.</h4>
+        <h4>Darbības</h4>
       </div>
       {deleteModal && (
         <DeleteConfirmationModal
@@ -71,7 +79,14 @@ const ReadingContainer = () => {
           notifyReadingDelete={notifyReadingDelete}
         />
       )}
-      {modal && <Modal skaititajs={readingForMeter} closeModal={closeModal} />}
+      {modal && (
+        <Modal
+          editMode={editMode}
+          chosenReading={chosenReading}
+          skaititajs={readingForMeter}
+          closeModal={closeModal}
+        />
+      )}
       {chosenMeter ? (
         <Reading
           skaititajs={chosenMeter}
@@ -79,6 +94,7 @@ const ReadingContainer = () => {
           handleMeterClick={handleMeterClick}
           openDeleteModal={openDeleteModal}
           notifyReadingDelete={notifyReadingDelete}
+          handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
         />
       ) : (
         <>
@@ -86,151 +102,176 @@ const ReadingContainer = () => {
             skaititajs={"tipoe"}
             url={url}
             handleMeterClick={handleMeterClick}
-            handleAddNewReading={handleAddNewReading}
+            handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
+            openDeleteModal={openDeleteModal}
           />
           <Reading
             skaititajs={"tipog"}
             url={url}
             handleMeterClick={handleMeterClick}
-            handleAddNewReading={handleAddNewReading}
+            handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
+            openDeleteModal={openDeleteModal}
           />
           <Reading
             skaititajs={"tipow"}
             url={url}
             handleMeterClick={handleMeterClick}
-            handleAddNewReading={handleAddNewReading}
+            handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
+            openDeleteModal={openDeleteModal}
           />
           <Reading
             skaititajs={"TipoE48865026"}
             url={url}
             handleMeterClick={handleMeterClick}
-            handleAddNewReading={handleAddNewReading}
+            handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
+            openDeleteModal={openDeleteModal}
           />
           <Reading
             skaititajs={"TipoE32878714"}
             url={url}
             handleMeterClick={handleMeterClick}
-            handleAddNewReading={handleAddNewReading}
+            handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
+            openDeleteModal={openDeleteModal}
           />
           <Reading
             skaititajs={"TipoE0281935"}
             url={url}
             handleMeterClick={handleMeterClick}
-            handleAddNewReading={handleAddNewReading}
+            handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
+            openDeleteModal={openDeleteModal}
           />
           <Reading
             skaititajs={"TipoE0282274"}
             url={url}
             handleMeterClick={handleMeterClick}
-            handleAddNewReading={handleAddNewReading}
+            handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
+            openDeleteModal={openDeleteModal}
           />
           <Reading
             skaititajs={"TipoE0281679"}
             url={url}
             handleMeterClick={handleMeterClick}
-            handleAddNewReading={handleAddNewReading}
+            handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
+            openDeleteModal={openDeleteModal}
           />
           <Reading
             skaititajs={"TipoE0282269_33067590"}
             url={url}
             handleMeterClick={handleMeterClick}
-            handleAddNewReading={handleAddNewReading}
+            handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
+            openDeleteModal={openDeleteModal}
           />
           <Reading
             skaititajs={"TipoE0281803"}
             url={url}
             handleMeterClick={handleMeterClick}
-            handleAddNewReading={handleAddNewReading}
+            handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
+            openDeleteModal={openDeleteModal}
           />
           <Reading
             skaititajs={"TipoE0281748"}
             url={url}
             handleMeterClick={handleMeterClick}
-            handleAddNewReading={handleAddNewReading}
+            handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
+            openDeleteModal={openDeleteModal}
           />
           <Reading
             skaititajs={"TipoE0281934"}
             url={url}
             handleMeterClick={handleMeterClick}
-            handleAddNewReading={handleAddNewReading}
+            handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
+            openDeleteModal={openDeleteModal}
           />
           <Reading
             skaititajs={"TipoE042268"}
             url={url}
             handleMeterClick={handleMeterClick}
-            handleAddNewReading={handleAddNewReading}
+            handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
+            openDeleteModal={openDeleteModal}
           />
           <Reading
             skaititajs={"TipoE0882410"}
             url={url}
             handleMeterClick={handleMeterClick}
-            handleAddNewReading={handleAddNewReading}
+            handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
+            openDeleteModal={openDeleteModal}
           />
           <Reading
             skaititajs={"TipoE327544"}
             url={url}
             handleMeterClick={handleMeterClick}
-            handleAddNewReading={handleAddNewReading}
+            handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
+            openDeleteModal={openDeleteModal}
           />
           <Reading
             skaititajs={"TipoE0282299"}
             url={url}
             handleMeterClick={handleMeterClick}
-            handleAddNewReading={handleAddNewReading}
+            handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
+            openDeleteModal={openDeleteModal}
           />
           <Reading
             skaititajs={"TipoE004165"}
             url={url}
             handleMeterClick={handleMeterClick}
-            handleAddNewReading={handleAddNewReading}
+            handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
+            openDeleteModal={openDeleteModal}
           />
           <Reading
             skaititajs={"TipoESanitex"}
             url={url}
             handleMeterClick={handleMeterClick}
-            handleAddNewReading={handleAddNewReading}
+            handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
+            openDeleteModal={openDeleteModal}
           />
           <Reading
             skaititajs={"majaElectricity"}
             url={url}
             handleMeterClick={handleMeterClick}
-            handleAddNewReading={handleAddNewReading}
+            handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
+            openDeleteModal={openDeleteModal}
           />
           <Reading
             skaititajs={"majaGas"}
             url={url}
             handleMeterClick={handleMeterClick}
-            handleAddNewReading={handleAddNewReading}
+            handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
+            openDeleteModal={openDeleteModal}
           />
           <Reading
             skaititajs={"majaWater"}
             url={url}
             handleMeterClick={handleMeterClick}
-            handleAddNewReading={handleAddNewReading}
+            handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
+            openDeleteModal={openDeleteModal}
           />
           <Reading
             skaititajs={"majaKontroles"}
             url={url}
             handleMeterClick={handleMeterClick}
-            handleAddNewReading={handleAddNewReading}
+            handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
+            openDeleteModal={openDeleteModal}
           />
           <Reading
             skaititajs={"mazgatavaElectricity"}
             url={url}
             handleMeterClick={handleMeterClick}
-            handleAddNewReading={handleAddNewReading}
+            handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
+            openDeleteModal={openDeleteModal}
           />
           <Reading
             skaititajs={"mazgatavaWater"}
             url={url}
             handleMeterClick={handleMeterClick}
-            handleAddNewReading={handleAddNewReading}
+            handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
+            openDeleteModal={openDeleteModal}
           />
           <Reading
             skaititajs={"mazgatavaKontroles"}
             url={url}
             handleMeterClick={handleMeterClick}
-            handleAddNewReading={handleAddNewReading}
+            handleAddNewReadingOrEdit={handleAddNewReadingOrEdit}
+            openDeleteModal={openDeleteModal}
           />
         </>
       )}

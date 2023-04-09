@@ -43,9 +43,32 @@ const deleteMajaGas = async (req, res) => {
   }
 }
 
+const editMajaGas = async (req, res) => {
+  try {
+    const editedItem = await MajaGas.findByIdAndUpdate(
+      req.params.id,
+      req.body
+    )
+    res.status(StatusCodes.OK).json({ msg: "Reading Edited" })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const getOneMajaGas = async (req, res) => {
+  try {
+    const oneReading = await MajaGas.findById(req.params.id)
+    res.status(StatusCodes.OK).json(oneReading)
+  } catch (error) {
+    res.status(StatusCodes.BAD_REQUEST).json({ msg: "Reading Not Found" })
+  }
+}
+
 module.exports = {
   createMajaGas,
   getLatestMajaGas,
   getAllMajaGas,
   deleteMajaGas,
+  editMajaGas,
+  getOneMajaGas,
 }

@@ -43,9 +43,32 @@ const deleteMazgatavaElectricity = async (req, res) => {
   }
 }
 
+const editMazgatavaElectricity = async (req, res) => {
+  try {
+    const editedItem = await MazgatavaElectricity.findByIdAndUpdate(
+      req.params.id,
+      req.body
+    )
+    res.status(StatusCodes.OK).json({ msg: "Reading Edited" })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const getOneMazgatavaElectricity = async (req, res) => {
+  try {
+    const oneReading = await MazgatavaElectricity.findById(req.params.id)
+    res.status(StatusCodes.OK).json(oneReading)
+  } catch (error) {
+    res.status(StatusCodes.BAD_REQUEST).json({ msg: "Reading Not Found" })
+  }
+}
+
 module.exports = {
   createMazgatavaElectricity,
   getLatestMazgatavaElectricity,
   getAllMazgatavaElectricity,
   deleteMazgatavaElectricity,
+  editMazgatavaElectricity,
+  getOneMazgatavaElectricity,
 }

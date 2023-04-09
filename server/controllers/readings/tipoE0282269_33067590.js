@@ -41,9 +41,32 @@ const deleteTipoE0282269_33067590 = async (req, res) => {
   }
 }
 
+const editTipoE0282269_33067590 = async (req, res) => {
+  try {
+    const editedItem = await TipoE0282269_33067590.findByIdAndUpdate(
+      req.params.id,
+      req.body
+    )
+    res.status(StatusCodes.OK).json({ msg: "Reading Edited" })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const getOneTipoE0282269_33067590 = async (req, res) => {
+  try {
+    const oneReading = await TipoE0282269_33067590.findById(req.params.id)
+    res.status(StatusCodes.OK).json(oneReading)
+  } catch (error) {
+    res.status(StatusCodes.BAD_REQUEST).json({ msg: "Reading Not Found" })
+  }
+}
+
 module.exports = {
   createTipoE0282269_33067590,
   getLatestTipoE0282269_33067590,
   getAllTipoE0282269_33067590,
   deleteTipoE0282269_33067590,
+  editTipoE0282269_33067590,
+  getOneTipoE0282269_33067590,
 }

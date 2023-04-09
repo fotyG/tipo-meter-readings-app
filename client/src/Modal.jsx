@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 
-const Modal = ({ closeModal, skaititajs }) => {
+const Modal = ({ closeModal, skaititajs, editMode, chosenReading }) => {
   const [readingPH, setReadingPH] = useState("rādījums")
   const [reading, setReading] = useState("")
   const [clientPH, setClientPH] = useState("")
@@ -12,25 +12,51 @@ const Modal = ({ closeModal, skaititajs }) => {
   const [location, setLocation] = useState("")
   const [meter, setMeter] = useState("")
 
+  let url
+  let axiosUrl
+
+  if (editMode) {
+    url = `${skaititajs}/${chosenReading}`
+    axiosUrl = `/readings/${skaititajs}/${chosenReading}`
+  } else {
+    url = `${skaititajs}/latest`
+    axiosUrl = `/readings/${skaititajs}`
+  }
   useEffect(() => {
     const fetchReadingData = async () => {
       try {
-        const response = await axios.get(`/readings/${skaititajs}/latest`)
-        setReadingPH(response.data.latest.reading)
-        setReading(response.data.latest.reading)
-        setClientPH(response.data.latest.client || "-")
-        setClient(response.data.latest.client || "")
+        const response = await axios.get(`/readings/${url}`)
+        editMode
+          ? setReadingPH(response.data.reading)
+          : setReadingPH(response.data.latest.reading)
+        editMode
+          ? setReading(response.data.reading)
+          : setReading(response.data.latest.reading)
+        editMode
+          ? setClientPH(response.data.client || "-")
+          : setClientPH(response.data.latest.client || "-")
+        editMode
+          ? setClient(response.data.client || "")
+          : setClient(response.data.latest.client || "")
 
-        setType(response.data.latest.type)
-        setProperty(response.data.latest.property || "")
-        setLocation(response.data.latest.pavilion || "")
-        setMeter(response.data.latest.meter || "")
+        editMode
+          ? setType(response.data.type)
+          : setType(response.data.latest.type)
+        editMode
+          ? setProperty(response.data.property || "")
+          : setProperty(response.data.latest.property || "")
+        editMode
+          ? setLocation(response.data.pavilion || "")
+          : setLocation(response.data.latest.pavilion || "")
+        editMode
+          ? setMeter(response.data.meter || "")
+          : setMeter(response.data.latest.meter || "")
       } catch (error) {
         console.log(error)
       }
     }
     fetchReadingData()
-  }, [])
+  }, [url])
 
   const handleReadingChange = (e) => {
     const newReading = e.target.value
@@ -41,16 +67,30 @@ const Modal = ({ closeModal, skaititajs }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const request = await axios.post(`/readings/${skaititajs}`, {
-        property,
-        type,
-        pavilion: location,
-        meter,
-        reading,
-        client,
-      })
-      if (request) {
-        closeModal()
+      if (editMode) {
+        const request = await axios.patch(`${axiosUrl}`, {
+          property,
+          type,
+          pavilion: location,
+          meter,
+          reading,
+          client,
+        })
+        if (request) {
+          closeModal()
+        }
+      } else {
+        const request = await axios.post(`${axiosUrl}`, {
+          property,
+          type,
+          pavilion: location,
+          meter,
+          reading,
+          client,
+        })
+        if (request) {
+          closeModal()
+        }
       }
     } catch (error) {
       console.log(error)
@@ -66,7 +106,7 @@ const Modal = ({ closeModal, skaititajs }) => {
         <div className="flex p-3 justify-center">
           <form className="text-teal-950">
             <h3 className="block text-center m-2 font-bold">
-              Jaunais rādījums
+              {editMode ? "Rādījuma labošana" : "Jaunais rādījums"}
             </h3>
             <div className="flex justify-between items-center">
               <label htmlFor="radijums">Rādījums:</label>
@@ -150,7 +190,7 @@ const Modal = ({ closeModal, skaititajs }) => {
               className="block mx-auto border border-teal-950 px-3 py-1 rounded-md text-teal-950 hover:bg-purple-300 transition-all shadow-md mt-3"
               onClick={(e) => handleSubmit(e)}
             >
-              Iesniegt
+              {editMode ? "Labot Rādījumu" : "Iesniegt"}
             </button>
           </form>
         </div>

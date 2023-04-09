@@ -43,4 +43,29 @@ const deleteTipoE = async (req, res) => {
   }
 }
 
-module.exports = { createTipoE, getLatestTipoE, getAllTipoE, deleteTipoE }
+const editTipoE = async (req, res) => {
+  try {
+    const editedItem = await TipoElectricity.findByIdAndUpdate(req.params.id, req.body)
+    res.status(StatusCodes.OK).json({ msg: "Reading Edited" })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const getOneTipoE = async (req,res) => {
+  try {
+    const oneReading = await TipoElectricity.findById(req.params.id)
+    res.status(StatusCodes.OK).json(oneReading)
+  } catch (error) {
+    res.status(StatusCodes.BAD_REQUEST).json({msg: "Reading Not Found"})
+  }
+}
+
+module.exports = {
+  createTipoE,
+  getLatestTipoE,
+  getAllTipoE,
+  deleteTipoE,
+  editTipoE,
+  getOneTipoE,
+}

@@ -43,9 +43,32 @@ const deleteMazgatavaWater = async (req, res) => {
   }
 }
 
+const editMazgatavaWater = async (req, res) => {
+  try {
+    const editedItem = await MazgatavaWater.findByIdAndUpdate(
+      req.params.id,
+      req.body
+    )
+    res.status(StatusCodes.OK).json({ msg: "Reading Edited" })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const getOneMazgatavaWater = async (req, res) => {
+  try {
+    const oneReading = await MazgatavaWater.findById(req.params.id)
+    res.status(StatusCodes.OK).json(oneReading)
+  } catch (error) {
+    res.status(StatusCodes.BAD_REQUEST).json({ msg: "Reading Not Found" })
+  }
+}
+
 module.exports = {
   createMazgatavaWater,
   getLatestMazgatavaWater,
   getAllMazgatavaWater,
   deleteMazgatavaWater,
+  editMazgatavaWater,
+  getOneMazgatavaWater,
 }

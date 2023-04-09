@@ -27,6 +27,9 @@ export const UserContextProvider = ({ children }) => {
         setId(userId)
         setUsername(name)
       } catch (error) {
+        setUsername(null)
+        setId(null)
+        setIsLoggedIn(false)
         navigate("/")
       }
     }

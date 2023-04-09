@@ -6,6 +6,8 @@ const {
   getLatestMazgatavaWater,
   getAllMazgatavaWater,
   deleteMazgatavaWater,
+  editMazgatavaWater,
+  getOneMazgatavaWater,
 } = require("../../controllers/readings/mazgatavaWater")
 
 router
@@ -13,6 +15,6 @@ router
   .post(createMazgatavaWater)
   .get(getAllMazgatavaWater)
 router.route("/MazgatavaWater/latest").get(getLatestMazgatavaWater)
-router.route("/MazgatavaWater/:id").delete(deleteMazgatavaWater)
+router.route("/MazgatavaWater/:id").delete(deleteMazgatavaWater).get(getOneMazgatavaWater).patch(editMazgatavaWater)
 
 module.exports = router

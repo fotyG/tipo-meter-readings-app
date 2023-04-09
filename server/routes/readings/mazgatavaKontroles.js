@@ -6,6 +6,8 @@ const {
   getLatestMazgatavaKontroles,
   getAllMazgatavaKontroles,
   deleteMazgatavaKontroles,
+  editMazgatavaKontroles,
+  getOneMazgatavaKontroles,
 } = require("../../controllers/readings/mazgatavaKontroles")
 
 router
@@ -13,6 +15,6 @@ router
   .post(createMazgatavaKontroles)
   .get(getAllMazgatavaKontroles)
 router.route("/MazgatavaKontroles/latest").get(getLatestMazgatavaKontroles)
-router.route("/MazgatavaKontroles/:id").delete(deleteMazgatavaKontroles)
+router.route("/MazgatavaKontroles/:id").delete(deleteMazgatavaKontroles).get(getOneMazgatavaKontroles).patch(editMazgatavaKontroles)
 
 module.exports = router

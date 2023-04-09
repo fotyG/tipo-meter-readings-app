@@ -6,10 +6,12 @@ const {
   getLatestTipoE004165,
   getAllTipoE004165,
   deleteTipoE004165,
+  editTipoE004165,
+  getOneTipoE004165,
 } = require("../../controllers/readings/tipoE004165")
 
 router.route("/TipoE004165").post(createTipoE004165).get(getAllTipoE004165)
 router.route("/TipoE004165/latest").get(getLatestTipoE004165)
-router.route("/TipoE004165/:id").delete(deleteTipoE004165)
+router.route("/TipoE004165/:id").delete(deleteTipoE004165).get(getOneTipoE004165).patch(editTipoE004165)
 
 module.exports = router

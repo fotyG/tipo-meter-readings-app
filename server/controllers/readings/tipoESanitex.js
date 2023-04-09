@@ -41,9 +41,32 @@ const deleteTipoESanitex = async (req, res) => {
   }
 }
 
+const editTipoESanitex = async (req, res) => {
+  try {
+    const editedItem = await TipoESanitex.findByIdAndUpdate(
+      req.params.id,
+      req.body
+    )
+    res.status(StatusCodes.OK).json({ msg: "Reading Edited" })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const getOneTipoESanitex = async (req, res) => {
+  try {
+    const oneReading = await TipoESanitex.findById(req.params.id)
+    res.status(StatusCodes.OK).json(oneReading)
+  } catch (error) {
+    res.status(StatusCodes.BAD_REQUEST).json({ msg: "Reading Not Found" })
+  }
+}
+
 module.exports = {
   createTipoESanitex,
   getLatestTipoESanitex,
   getAllTipoESanitex,
   deleteTipoESanitex,
+  editTipoESanitex,
+  getOneTipoESanitex,
 }
