@@ -16,7 +16,8 @@ const RegisterLogin = () => {
   const navigate = useNavigate()
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const url = loginOrRegister === "register" ? "auth/register" : "auth/login"
+    const url = "auth/login"
+    //const url = loginOrRegister === "register" ? "auth/register" : "auth/login"
     try {
       const response = await axios.post(url, { username, password })
       setLoggedInUsername(response.data.user.name)
@@ -38,50 +39,55 @@ const RegisterLogin = () => {
           onSubmit={handleSubmit}
         >
           <h3 className="block w-full text-center mb-4 text-blue-900">
-            Welcome!
+            Laipni lūgti!
           </h3>
           <input
             type="text"
-            placeholder="username"
+            placeholder="lietotājvārds"
             className="block w-full p-2 mb-4 rounded-md text-blue-950 outline-blue-500"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
           <input
             type="password"
-            placeholder="password"
+            placeholder="parole"
             className="block w-full p-2 mb-4 rounded-md text-blue-950 outline-blue-500"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          {isError && <p className="text-sm text-center mb-2 text-red-500">Nepareizi dati</p>}
+          {isError && (
+            <p className="text-sm text-center mb-2 text-red-500">
+              Nepareizi dati
+            </p>
+          )}
           <button className="block w-full bg-blue-300 p-2 mb-2 rounded-md text-blue-900 hover:bg-blue-400 transition-all">
-            {loginOrRegister === "register" ? "Register" : "Login"}
+            Pieslēgties
+            {/* {loginOrRegister === "register" ? "Reģistrēties" : "Pieslēgties"} */}
           </button>
-          <div className="text-center mt-2">
+          {/* <div className="text-center mt-2">
             {loginOrRegister === "register" && (
               <div className="text-sm text-blue-950">
-                Already a member?
+                Jau ir profils?
                 <button
                   className="ml-1 text-sm text-blue-500"
                   onClick={() => setLoginOrRegister("login")}
                 >
-                  Login here
+                  Pierakstīties šeit
                 </button>
               </div>
             )}
             {loginOrRegister === "login" && (
               <div className="text-sm text-blue-950">
-                Don't have an account?
+                Nav profila?
                 <button
                   className="ml-1 text-sm text-blue-500"
                   onClick={() => setLoginOrRegister("register")}
                 >
-                  Register
+                  Reģistrēties
                 </button>
               </div>
             )}
-          </div>
+          </div> */}
         </form>
       </div>
     </>
