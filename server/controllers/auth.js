@@ -11,6 +11,7 @@ const register = async (req, res) => {
       .cookie("token", token, {
         maxAge: 60 * 60 * 1000,
         httpOnly: true,
+        sameSite: None,
         secure: true,
       })
       .json({ user: { name: user.username }, token })
@@ -39,6 +40,7 @@ const login = async (req, res) => {
       .cookie("token", token, {
         maxAge: 60 * 60 * 1000,
         httpOnly: true,
+        sameSite: None,
         secure: true,
       })
       .json({ user: { name: user.username }, token })
