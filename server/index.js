@@ -42,10 +42,10 @@ app.use(cookieParser())
 app.use(express.json())
 app.use(helmet())
 app.use(cors({credentials: true, origin: clientUrl}))
-// app.use((req, res, next) => {
-//   res.setHeader("Access-Control-Allow-Origin", clientUrl)
-//   next()
-// })
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", clientUrl)
+  next()
+})
 // error handler
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
