@@ -12,6 +12,7 @@ const register = async (req, res) => {
         maxAge: 60 * 60 * 1000,
         httpOnly: true,
         sameSite: "Lax",
+        secure: true,
       })
       .json({ user: { name: user.username }, token })
   } catch (error) {
@@ -40,6 +41,7 @@ const login = async (req, res) => {
         maxAge: 60 * 60 * 1000,
         httpOnly: true,
         sameSite: "Lax",
+        secure: true,
       })
       .json({ user: { name: user.username }, token })
   } catch (error) {
