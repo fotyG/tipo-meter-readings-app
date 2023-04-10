@@ -14,7 +14,7 @@ const register = async (req, res) => {
         httpOnly: true,
         sameSite: "None",
         secure: true,
-        domain: process.env.CLIENT_URL,
+        domain: process.env.COOKIE_DOMAIN,
       })
       .json({ user: { name: user.username }, token })
   } catch (error) {
@@ -44,7 +44,7 @@ const login = async (req, res) => {
         httpOnly: true,
         sameSite: "None",
         secure: true,
-        domain: process.env.CLIENT_URL,
+        domain: process.env.COOKIE_DOMAIN,
       })
       .json({ user: { name: user.username }, token })
   } catch (error) {
