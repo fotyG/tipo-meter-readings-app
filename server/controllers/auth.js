@@ -1,3 +1,4 @@
+
 const User = require("../models/User")
 const { StatusCodes } = require("http-status-codes")
 const { BadRequestError, UnauthenticatedError } = require("../errors")
@@ -13,6 +14,7 @@ const register = async (req, res) => {
         httpOnly: true,
         sameSite: "None",
         secure: true,
+        domain: process.env.CLIENT_URL,
       })
       .json({ user: { name: user.username }, token })
   } catch (error) {
@@ -42,6 +44,7 @@ const login = async (req, res) => {
         httpOnly: true,
         sameSite: "None",
         secure: true,
+        domain: process.env.CLIENT_URL,
       })
       .json({ user: { name: user.username }, token })
   } catch (error) {
