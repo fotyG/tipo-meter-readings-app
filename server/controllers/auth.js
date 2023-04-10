@@ -14,7 +14,7 @@ const register = async (req, res) => {
         httpOnly: true,
         sameSite: "None",
         secure: true,
-        domain: process.env.COOKIE_DOMAIN,
+        domain: "tipo-app.vercel.app",
       })
       .json({ user: { name: user.username }, token })
   } catch (error) {
@@ -44,7 +44,7 @@ const login = async (req, res) => {
         httpOnly: true,
         sameSite: "None",
         secure: true,
-        domain: process.env.COOKIE_DOMAIN,
+        domain: "tipo-app.vercel.app",
       })
       .json({ user: { name: user.username }, token })
   } catch (error) {
