@@ -12,9 +12,9 @@ const register = async (req, res) => {
       .cookie("token", token, {
         maxAge: 60 * 60 * 1000,
         httpOnly: true,
-        sameSite: "None",
-        secure: true,
-        domain: "tipo-app.vercel.app",
+        sameSite: "Lax",
+        //secure: true,
+       // domain: "tipo-app.vercel.app",
       })
       .json({ user: { name: user.username }, token })
   } catch (error) {
@@ -42,9 +42,9 @@ const login = async (req, res) => {
       .cookie("token", token, {
         maxAge: 60 * 60 * 1000,
         httpOnly: true,
-        sameSite: "None",
-        secure: true,
-        domain: "tipo-app.vercel.app",
+        sameSite: "Lax",
+        //secure: true,
+        //domain: "tipo-app.vercel.app",
       })
       .json({ user: { name: user.username }, token })
   } catch (error) {
