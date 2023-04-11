@@ -7,7 +7,7 @@
     }
   ],
   "routes": [
-    { "src": "/dashboard", "dest": "/index.html" },
-    { "src": "/(.*)", "dest": "/index.html" }
+    { "src": "/dashboard", "dest": "/" },
+    { "src": "/(.*)", "dest": "/" }
   ]
 }
