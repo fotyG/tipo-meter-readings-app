@@ -9,16 +9,9 @@ const register = async (req, res) => {
     const token = user.createJWT()
     res
       .status(StatusCodes.CREATED)
-      .cookie("token", token, {
-        maxAge: 60 * 60 * 1000,
-        httpOnly: true,
-        sameSite: "Lax",
-       // secure: true,
-       // domain: "tipo-app.vercel.app",
-      })
       .json({ user: { name: user.username }, token })
   } catch (error) {
-    console.log(error)
+    res.json({msg: "Registering Unsuccessful"})
   }
 }
 
@@ -39,16 +32,9 @@ const login = async (req, res) => {
     const token = user.createJWT()
     res
       .status(StatusCodes.OK)
-      .cookie("token", token, {
-        maxAge: 60 * 60 * 1000,
-        httpOnly: true,
-        sameSite: "Lax",
-        //secure: true,
-        //domain: "tipo-app.vercel.app",
-      })
       .json({ user: { name: user.username }, token })
   } catch (error) {
-    res.send(error)
+    res.json({msg: error})
   }
 }
 

@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { useCookies } from "react-cookie"
 
 const DeleteConfirmationModal = ({
   closeDeleteModal,
@@ -7,9 +8,15 @@ const DeleteConfirmationModal = ({
   skaititajs,
   notifyReadingDelete,
 }) => {
+  const [ cookies, useCookie, removeCookie ] = useCookies()
+
   const handleDelete = async (e, meter, id) => {
     e.preventDefault()
-    const deletedItem = await axios.delete(`readings/${meter}/${id}`)
+    const deletedItem = await axios.delete(`readings/${meter}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${cookies.token}`,
+      },
+    })
     if (deletedItem) {
       notifyReadingDelete()
       closeDeleteModal()

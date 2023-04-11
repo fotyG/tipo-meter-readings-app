@@ -2,29 +2,43 @@ import { useContext, useState } from "react"
 import { UserContext } from "./UserContext"
 import axios from "axios"
 import { useNavigate } from "react-router"
+import { useCookies } from "react-cookie"
 
 const RegisterLogin = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [isError, setIsError] = useState(false)
   const [loginOrRegister, setLoginOrRegister] = useState("login")
+  const [cookies, setCookie, removeCookie] = useCookies()
   const {
     setUsername: setLoggedInUsername,
     setIsLoggedIn,
     isLoggedIn,
+    token,
+    setToken,
+    authToken,
   } = useContext(UserContext)
   const navigate = useNavigate()
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     const url = "auth/login"
     //const url = loginOrRegister === "register" ? "auth/register" : "auth/login"
     try {
-      const response = await axios.post(url, { username, password })
+      const response = await axios.post(
+        url,
+        { username, password },
+      )
+      
+      //setToken(response.data.token)
       setLoggedInUsername(response.data.user.name)
+      setCookie("token", response.data.token, {path: "/", maxAge: 60*60})
+      setToken(response.data.token)
+      setIsLoggedIn(true)
       
       setUsername("")
       setPassword("")
-      setIsLoggedIn(true)
+      navigate("/dashboard")
     } catch (error) {
       setIsError(true)
       console.log(error)

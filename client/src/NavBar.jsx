@@ -11,7 +11,6 @@ const NavBar = () => {
         to="/iesniegt"
         className="border border-white px-2 py-1 rounded-md text-white hover:bg-purple-500 transition-all"
         onClick={logout}
-        prefetch={false}
       >
         Izrakstīties
       </button>

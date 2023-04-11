@@ -4,7 +4,7 @@ import { UserContextProvider } from "./UserContext"
 
 function App() {
   axios.defaults.baseURL = "http://localhost:6969/api/v1/"
-  axios.defaults.withCredentials = true;
+  
 
   return (
     <UserContextProvider>

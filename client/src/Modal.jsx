@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { useCookies } from "react-cookie"
 
 const Modal = ({ closeModal, skaititajs, editMode, chosenReading }) => {
   const [readingPH, setReadingPH] = useState("rādījums")
@@ -11,6 +12,7 @@ const Modal = ({ closeModal, skaititajs, editMode, chosenReading }) => {
   const [property, setProperty] = useState("")
   const [location, setLocation] = useState("")
   const [meter, setMeter] = useState("")
+  const [ cookies, setCookie, removeCookie ] = useCookies()
 
   let url
   let axiosUrl
@@ -25,7 +27,11 @@ const Modal = ({ closeModal, skaititajs, editMode, chosenReading }) => {
   useEffect(() => {
     const fetchReadingData = async () => {
       try {
-        const response = await axios.get(`/readings/${url}`)
+        const response = await axios.get(`/readings/${url}`, {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        })
         editMode
           ? setReadingPH(response.data.reading)
           : setReadingPH(response.data.latest.reading)
@@ -68,14 +74,22 @@ const Modal = ({ closeModal, skaititajs, editMode, chosenReading }) => {
     e.preventDefault()
     try {
       if (editMode) {
-        const request = await axios.patch(`${axiosUrl}`, {
-          property,
-          type,
-          pavilion: location,
-          meter,
-          reading,
-          client,
-        })
+        const request = await axios.patch(
+          `${axiosUrl}`,
+          {
+            property,
+            type,
+            pavilion: location,
+            meter,
+            reading,
+            client,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${cookies.token}`,
+            },
+          }
+        )
         if (request) {
           closeModal()
         }

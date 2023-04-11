@@ -52,11 +52,11 @@ const errorHandlerMiddleware = require('./middleware/error-handler');
 
 app.get("/api/v1/profile", authenticateUser, (req, res) => {
   const { name, userId } = req.user
-  res.json({name, userId})
+  res.json({ name, userId })
 })
 
 app.post("/api/v1/logout", (req, res) => {
-  res.clearCookie("token", {httpOnly: true})
+  res.clearCookie("token")
   res.status(200).json({ msg: "logged out successfully" })
 })
 
@@ -64,7 +64,7 @@ app.post("/api/v1/logout", (req, res) => {
 app.use("/api/v1/auth", authRouter)
 app.use(
   "/api/v1/readings",
-  //authenticateUser,
+  authenticateUser,
   tipoERouter,
   tipoGRouter,
   tipoWRouter,

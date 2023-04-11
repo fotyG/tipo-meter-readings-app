@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useCallback, useEffect, useState } from "react"
+import { useCookies } from "react-cookie"
 import {
   BsBoxArrowLeft,
   BsFileEarmarkText,
@@ -26,6 +27,7 @@ const Reading = ({
   const [meter, setMeter] = useState("-")
   const [readingId, setReadingId] = useState("")
   const [readingArr, setReadingArr] = useState([])
+  const [cookies, setCookie, removeCookie] = useCookies();
 
   const formatDate = (dateData) => {
     const isoDateString = dateData
@@ -39,7 +41,11 @@ const Reading = ({
 
   const getReading = useCallback(async () => {
     try {
-      const data = await axios.get(`/readings/${skaititajs}/${url}`)
+      const data = await axios.get(`/readings/${skaititajs}/${url}`, {
+        headers: {
+          Authorization: `Bearer ${cookies.token}`,
+        },
+      })
       if (url === "") {
         const array = await data.data.readings
         // loop through the array and calculate the consumption for each reading
