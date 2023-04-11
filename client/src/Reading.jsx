@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useContext, useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 import {
   BsBoxArrowLeft,
@@ -8,6 +8,8 @@ import {
   BsTrash,
   BsPencil,
 } from "react-icons/bs"
+import { useNavigate } from "react-router"
+import { UserContext } from "./UserContext"
 
 const Reading = ({
   skaititajs,
@@ -17,6 +19,11 @@ const Reading = ({
   openDeleteModal,
   notifyReadingDelete,
 }) => {
+  const {
+    setUsername: setLoggedInUsername,
+    setIsLoggedIn,
+    setId,
+  } = useContext(UserContext)
   const [date, setDate] = useState("-")
   const [reading, setReading] = useState("-")
   const [consumption, setConsumption] = useState("-")
@@ -28,6 +35,7 @@ const Reading = ({
   const [readingId, setReadingId] = useState("")
   const [readingArr, setReadingArr] = useState([])
   const [cookies, setCookie, removeCookie] = useCookies();
+  const navigate = useNavigate()
 
   const formatDate = (dateData) => {
     const isoDateString = dateData
@@ -74,7 +82,14 @@ const Reading = ({
         setReadingId(data.data.latest._id)
       }
     } catch (error) {
-      console.log(error.message)
+      if (error.response.status === 401) {
+        setLoggedInUsername(null)
+        setId(null)
+        setIsLoggedIn(false)
+        navigate("/")
+      } else {
+        console.log(error)
+      }
     }
   }, [skaititajs, url])
 
