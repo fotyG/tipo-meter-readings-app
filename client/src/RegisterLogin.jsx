@@ -32,7 +32,7 @@ const RegisterLogin = () => {
       
       //setToken(response.data.token)
       setLoggedInUsername(response.data.user.name)
-      setCookie("token", response.data.token, {path: "/", maxAge: 60*60})
+      setCookie("token", response.data.token, {path: "/", maxAge: 60*60, secure: true})
       setToken(response.data.token)
       setIsLoggedIn(true)
       
