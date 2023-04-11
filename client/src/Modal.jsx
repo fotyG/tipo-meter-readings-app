@@ -94,14 +94,22 @@ const Modal = ({ closeModal, skaititajs, editMode, chosenReading }) => {
           closeModal()
         }
       } else {
-        const request = await axios.post(`${axiosUrl}`, {
-          property,
-          type,
-          pavilion: location,
-          meter,
-          reading,
-          client,
-        })
+        const request = await axios.post(
+          `${axiosUrl}`,
+          {
+            property,
+            type,
+            pavilion: location,
+            meter,
+            reading,
+            client,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${cookies.token}`,
+            },
+          }
+        )
         if (request) {
           closeModal()
         }
