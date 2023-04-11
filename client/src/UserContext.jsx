@@ -30,19 +30,22 @@ export const UserContextProvider = ({ children }) => {
       try {
         const response = await axios.get("/profile", {
           headers: {
-            Authorization: `Bearer ${cookies.token}`
-          }
+            Authorization: `Bearer ${cookies.token}`,
+          },
         })
         const { name, userId } = response.data
         setIsLoggedIn(true)
         setId(userId)
         setUsername(name)
       } catch (error) {
-        console.log(error)
-        setUsername(null)
-        setId(null)
-        setIsLoggedIn(false)
-        navigate("/")
+        if (error.response.status === 401) {
+          setUsername(null)
+          setId(null)
+          setIsLoggedIn(false)
+          navigate("/")
+        } else {
+          console.log(error)
+        }
       }
     }
     getProfile()
