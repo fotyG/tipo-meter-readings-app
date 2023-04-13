@@ -12,7 +12,6 @@ import { useNavigate } from "react-router"
 import { UserContext } from "./UserContext"
 
 const Reading = ({
-  skaititajs,
   url,
   handleMeterClick,
   handleAddNewReadingOrEdit,
@@ -24,17 +23,8 @@ const Reading = ({
     setIsLoggedIn,
     setId,
   } = useContext(UserContext)
-  const [date, setDate] = useState("-")
-  const [reading, setReading] = useState("-")
-  const [consumption, setConsumption] = useState("-")
-  const [client, setClient] = useState("-")
-  const [type, setType] = useState("-")
-  const [property, setProperty] = useState("-")
-  const [location, setLocation] = useState("-")
-  const [meter, setMeter] = useState("-")
-  const [readingId, setReadingId] = useState("")
   const [readingArr, setReadingArr] = useState([])
-  const [cookies, setCookie, removeCookie] = useCookies();
+  const [cookies, setCookie, removeCookie] = useCookies()
   const navigate = useNavigate()
 
   const formatDate = (dateData) => {
@@ -47,60 +37,80 @@ const Reading = ({
     return formattedDate
   }
 
-  const getReading = useCallback(async () => {
-    try {
-      const data = await axios.get(`/readings/${skaititajs}/${url}`, {
-        headers: {
-          Authorization: `Bearer ${cookies.token}`,
-        },
-      })
-      if (url === "") {
-        const array = await data.data.readings
-        // loop through the array and calculate the consumption for each reading
-        const readingsWithConsumption = array.map((reading, index) => {
-          const consumption =
-            index < array.length - 1
-              ? reading.reading - array[index + 1].reading
-              : 0
-          return { ...reading, consumption }
-        })
-        setReadingArr(readingsWithConsumption)
-      } else {
-        const formattedDate = formatDate(data.data.latest.createdAt)
-        setDate(formattedDate)
-        setReading(data.data.latest.reading)
-        setConsumption(data.data.latest.reading - data.data?.previous?.reading)
-        setClient(
-          data.data.latest.client === "" ? "-" : data.data.latest.client
-        )
-        setType(data.data.latest.type)
-        setProperty(data.data.latest.property)
-        setLocation(
-          data.data.latest.pavilion === "" ? "-" : data.data.latest.pavilion
-        )
-        setMeter(data.data.latest.meter === "" ? "-" : data.data.latest.meter)
-        setReadingId(data.data.latest._id)
-      }
-    } catch (error) {
-      if (error.response.status === 401) {
-        setLoggedInUsername(null)
-        setId(null)
-        setIsLoggedIn(false)
-        navigate("/")
-      } else {
-        console.log(error)
-      }
-    }
-  }, [skaititajs, url])
+  // const getReading = useCallback(async () => {
+  //   try {
+  //     const response = await axios.get(`/meters/${url}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${cookies.token}`,
+  //       },
+  //     })
+  //     if (url) {
+  //       const array = response.data
+  //       // loop through the array and calculate the consumption for each reading
+  //       const readingsWithConsumption = array.map((reading, index) => {
+  //         const consumption =
+  //           index < array.length - 1
+  //             ? reading.reading - array[index + 1].reading
+  //             : 0
+  //         return { ...reading, consumption }
+  //       })
+  //       setReadingArr(readingsWithConsumption)
+  //     } else {
+  //       setReadingArr(response.data)
+  //     }
+  //   } catch (error) {
+  //     if (error.response.status === 401) {
+  //       setLoggedInUsername(null)
+  //       setId(null)
+  //       setIsLoggedIn(false)
+  //       navigate("/")
+  //     } else {
+  //       console.log(error)
+  //     }
+  //   }
+  // }, [url])
 
   useEffect(() => {
+    const getReading = async (req, res) => {
+      try {
+        const response = await axios.get(`/meters/${url}`, {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        })
+        if (url) {
+          const array = response.data
+          // loop through the array and calculate the consumption for each reading
+          const readingsWithConsumption = array.map((reading, index) => {
+            const consumption =
+              index < array.length - 1
+                ? reading.reading - array[index + 1].reading
+                : 0
+            return { ...reading, consumption }
+          })
+          setReadingArr(readingsWithConsumption)
+        } else {
+          setReadingArr(response.data)
+        }
+      } catch (error) {
+        if (error.response.status === 401) {
+          setLoggedInUsername(null)
+          setId(null)
+          setIsLoggedIn(false)
+          navigate("/")
+        } else {
+          console.log(error)
+        }
+      }
+    }
     getReading()
-  }, [handleAddNewReadingOrEdit, getReading, notifyReadingDelete])
-
-  if (url === "") {
+  }, [handleAddNewReadingOrEdit, notifyReadingDelete])
+  
+  // All readings for chosen meter
+  if (url) {
     return readingArr.map((result) => {
+      //console.log(result)
       const formattedDate = formatDate(result.createdAt)
-      const id = result._id
       return (
         <div
           key={result._id}
@@ -110,16 +120,20 @@ const Reading = ({
           <p className="">{result.reading}</p>
           <p className="">{result.consumption}</p>
           <p className="">{result.client === "" ? "-" : result.client}</p>
-          <p className="">{result.type}</p>
-          <p className="">{result.property}</p>
-          <p className="">{result.pavilion === "" ? "-" : result.pavilion}</p>
-          <p className="">{result.meter === "" ? "-" : result.meter}</p>{" "}
+          <p className="">{result.meterId.meterType}</p>
+          <p className="">{result.meterId.location}</p>
+          <p className="">
+            {result.meterId.pavilion === "" ? "-" : result.meterId.pavilion}
+          </p>
+          <p className="">
+            {result.meterId.meterNr === "" ? "-" : result.meterId.meterNr}
+          </p>
           <div className="flex justify-end px-4 gap-2">
             {readingArr[0]._id === result._id && (
               <button
                 className="hover:text-violet-800"
                 title="Pievienot jaunu rādījumu"
-                onClick={() => handleAddNewReadingOrEdit(skaititajs)}
+                onClick={() => handleAddNewReadingOrEdit(result.meterId._id)}
               >
                 <BsPlusCircle />
               </button>
@@ -127,21 +141,23 @@ const Reading = ({
             <button
               className="hover:text-violet-800"
               title="Atgriezties pie visiem skaitītājiem"
-              onClick={() => handleMeterClick(skaititajs)}
+              onClick={() => handleMeterClick()}
             >
               <BsBoxArrowLeft />
             </button>
             <button
               className="hover:text-violet-800"
               title="Labot rādījumu"
-              onClick={() => handleAddNewReadingOrEdit(skaititajs, id)}
+              onClick={() =>
+                handleAddNewReadingOrEdit(result.meterId._id, result._id)
+              }
             >
               <BsPencil />
             </button>
             <button
               className="hover:text-violet-800"
               title="Dzēst rādījumu"
-              onClick={() => openDeleteModal(skaititajs, id)}
+              onClick={() => openDeleteModal(result._id)}
             >
               <BsTrash />
             </button>
@@ -150,50 +166,66 @@ const Reading = ({
       )
     })
   }
-  return (
-    <div
-      key={readingId}
-      className="grid grid-cols-9 p-2 text-teal-950 text-center hover:bg-violet-100 transition-all"
-    >
-      <p className="">{date}</p>
-      <p className="">{reading}</p>
-      <p className="">{consumption}</p>
-      <p className="">{client}</p>
-      <p className="">{type}</p>
-      <p className="">{property}</p>
-      <p className="">{location}</p>
-      <p className="">{meter}</p>
-      <div className="flex justify-end px-4 gap-2">
-        <button
-          className="hover:text-violet-800"
-          title="Visi skaitītāja rādījumi"
-          onClick={() => handleMeterClick(skaititajs)}
+
+  // Latest reading for every existing meter below
+  if (!url) {
+    return readingArr.map((meter) => {
+      //console.log(meter)
+      const formattedDate = formatDate(meter.readings[0].createdAt)
+      return (
+        <div
+          key={meter._id}
+          className="grid grid-cols-9 p-2 text-teal-950 text-center hover:bg-violet-100 transition-all"
         >
-          <BsFileEarmarkText />
-        </button>
-        <button
-          className="hover:text-violet-800"
-          title="Pievienot jaunu rādījumu"
-          onClick={() => handleAddNewReadingOrEdit(skaititajs)}
-        >
-          <BsPlusCircle />
-        </button>
-        <button
-          className="hover:text-violet-800"
-          title="Labot rādījumu"
-          onClick={() => handleAddNewReadingOrEdit(skaititajs, readingId)}
-        >
-          <BsPencil />
-        </button>
-        <button
-          className="hover:text-violet-800"
-          title="Dzēst rādījumu"
-          onClick={() => openDeleteModal(skaititajs, readingId)}
-        >
-          <BsTrash />
-        </button>
-      </div>
-    </div>
-  )
+          <p className="">{formattedDate}</p>
+          <p className="">{meter.readings[0].reading}</p>
+          <p className="">
+            {meter.readings[0].reading -
+              (meter.readings[1]?.reading ? meter.readings[1].reading : 0)}
+          </p>
+          <p className="">
+            {meter.readings[0].client === "" ? "-" : meter.readings[0].client}
+          </p>
+          <p className="">{meter.meterType}</p>
+          <p className="">{meter.location}</p>
+          <p className="">{meter.pavilion === "" ? "-" : meter.pavilion}</p>
+          <p className="">{meter.meterNr === "" ? "-" : meter.meterNr}</p>
+          <div className="flex justify-end px-4 gap-2">
+            <button
+              className="hover:text-violet-800"
+              title="Visi skaitītāja rādījumi"
+              onClick={() => handleMeterClick(meter._id)}
+            >
+              <BsFileEarmarkText />
+            </button>
+            <button
+              className="hover:text-violet-800"
+              title="Pievienot jaunu rādījumu"
+              onClick={() => handleAddNewReadingOrEdit(meter._id)}
+            >
+              <BsPlusCircle />
+            </button>
+            <button
+              className="hover:text-violet-800"
+              title="Labot rādījumu"
+              onClick={() =>
+                handleAddNewReadingOrEdit(meter._id, meter.readings[0]._id)
+              }
+            >
+              <BsPencil />
+            </button>
+            <button
+              className="hover:text-violet-800"
+              title="Dzēst rādījumu"
+              onClick={() => openDeleteModal(meter.readings[0]._id)}
+            >
+              <BsTrash />
+            </button>
+          </div>
+        </div>
+      )
+    })
+  }
 }
+
 export default Reading
