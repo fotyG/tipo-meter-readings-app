@@ -3,7 +3,7 @@ import AppRoutes from "./AppRoutes"
 import { UserContextProvider } from "./UserContext"
 
 function App() {
-  axios.defaults.baseURL = "http://localhost:6969/api/v2/"
+  axios.defaults.baseURL = "https://api-tipo-app.vercel.app/api/v2/"
   
   
 
