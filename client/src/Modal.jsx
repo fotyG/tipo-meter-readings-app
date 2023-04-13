@@ -1,9 +1,10 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
+import { useNavigate } from "react-router"
 
-const Modal = ({ closeModal, skaititajs, editMode, chosenReading }) => {
-  const [readingPH, setReadingPH] = useState("rādījums")
+const Modal = ({ closeModal, readingForMeter, editMode, chosenReading }) => {
+  const [readingPH, setReadingPH] = useState("Rādījums")
   const [reading, setReading] = useState("")
   const [clientPH, setClientPH] = useState("")
   const [client, setClient] = useState("")
@@ -12,53 +13,43 @@ const Modal = ({ closeModal, skaititajs, editMode, chosenReading }) => {
   const [property, setProperty] = useState("")
   const [location, setLocation] = useState("")
   const [meter, setMeter] = useState("")
-  const [ cookies, setCookie, removeCookie ] = useCookies()
-
+  const [cookies, setCookie, removeCookie] = useCookies()
+  const navigate = useNavigate()
+  
   let url
   let axiosUrl
 
   if (editMode) {
-    url = `${skaititajs}/${chosenReading}`
-    axiosUrl = `/readings/${skaititajs}/${chosenReading}`
+    url = `readings/${chosenReading}`
+    axiosUrl = `/readings/${chosenReading}`
   } else {
-    url = `${skaititajs}/latest`
-    axiosUrl = `/readings/${skaititajs}`
+    url = `meters/${readingForMeter}`
+    axiosUrl = "/readings"
   }
   useEffect(() => {
     const fetchReadingData = async () => {
       try {
-        const response = await axios.get(`/readings/${url}`, {
+        const response = await axios.get(`${url}`, {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
           },
         })
-        editMode
-          ? setReadingPH(response.data.reading)
-          : setReadingPH(response.data.latest.reading)
-        editMode
-          ? setReading(response.data.reading)
-          : setReading(response.data.latest.reading)
-        editMode
-          ? setClientPH(response.data.client || "-")
-          : setClientPH(response.data.latest.client || "-")
-        editMode
-          ? setClient(response.data.client || "")
-          : setClient(response.data.latest.client || "")
+        //console.log(response.data)
 
-        editMode
-          ? setType(response.data.type)
-          : setType(response.data.latest.type)
-        editMode
-          ? setProperty(response.data.property || "")
-          : setProperty(response.data.latest.property || "")
-        editMode
-          ? setLocation(response.data.pavilion || "")
-          : setLocation(response.data.latest.pavilion || "")
-        editMode
-          ? setMeter(response.data.meter || "")
-          : setMeter(response.data.latest.meter || "")
+        setReadingPH(response.data[0].reading)
+        setReading(response.data[0].reading)
+        setClientPH(response.data[0].client || "-")
+        setClient(response.data[0].client || "")
+        setType(response.data[0].meterId.meterType)
+        setProperty(response.data[0].meterId.location || "-")
+        setLocation(response.data[0].meterId.pavilion || "-")
+        setMeter(response.data[0].meterId.meterNr || "-")
       } catch (error) {
-        console.log(error)
+        if (error.response.status === 401) {
+          navigate("/")
+        } else {
+          console.log(error)
+        }
       }
     }
     fetchReadingData()
@@ -77,10 +68,6 @@ const Modal = ({ closeModal, skaititajs, editMode, chosenReading }) => {
         const request = await axios.patch(
           `${axiosUrl}`,
           {
-            property,
-            type,
-            pavilion: location,
-            meter,
             reading,
             client,
           },
@@ -97,10 +84,7 @@ const Modal = ({ closeModal, skaititajs, editMode, chosenReading }) => {
         const request = await axios.post(
           `${axiosUrl}`,
           {
-            property,
-            type,
-            pavilion: location,
-            meter,
+            meterId: readingForMeter,
             reading,
             client,
           },

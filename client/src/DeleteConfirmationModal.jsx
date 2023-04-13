@@ -1,18 +1,16 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 
 const DeleteConfirmationModal = ({
   closeDeleteModal,
   chosenReading,
-  skaititajs,
   notifyReadingDelete,
 }) => {
-  const [ cookies, useCookie, removeCookie ] = useCookies()
+  const [cookies, useCookie, removeCookie] = useCookies()
 
-  const handleDelete = async (e, meter, id) => {
+  const handleDelete = async (e, id) => {
     e.preventDefault()
-    const deletedItem = await axios.delete(`readings/${meter}/${id}`, {
+    const deletedItem = await axios.delete(`readings/${id}`, {
       headers: {
         Authorization: `Bearer ${cookies.token}`,
       },
@@ -37,7 +35,7 @@ const DeleteConfirmationModal = ({
             <div className="flex justify-center gap-3">
               <button
                 className="block border border-teal-950 px-3 py-1 rounded-md text-teal-950 hover:bg-purple-300 transition-all shadow-md mt-3"
-                onClick={(e) => handleDelete(e, skaititajs, chosenReading)}
+                onClick={(e) => handleDelete(e, chosenReading)}
               >
                 Dzēst
               </button>

@@ -27,6 +27,10 @@ export const UserContextProvider = ({ children }) => {
 
   useEffect(() => {
     const getProfile = async () => {
+      if (!cookies.token) {
+        setIsLoggedIn(false)
+        return
+      }
       try {
         const response = await axios.get("/profile", {
           headers: {
@@ -49,7 +53,7 @@ export const UserContextProvider = ({ children }) => {
       }
     }
     getProfile()
-  }, [isLoggedIn, cookies])
+  }, [cookies])
 
   return (
     <UserContext.Provider
