@@ -1,68 +1,67 @@
-import { useEffect, useState } from "react"
-import Reading from "./Reading"
-import Modal from "./Modal"
-import DeleteConfirmationModal from "./DeleteConfirmationModal"
+import { useEffect, useState } from "react";
+import Reading from "./Reading";
+import Modal from "./Modal";
+import DeleteConfirmationModal from "./DeleteConfirmationModal";
 
 const ReadingContainer = () => {
-  const [chosenMeter, setChosenMeter] = useState(false)
-  const [url, setUrl] = useState("")
-  const [modal, setModal] = useState(false)
-  const [deleteModal, setDeleteModal] = useState(false)
-  const [readingForMeter, setReadingForMeter] = useState(false)
-  const [chosenReading, setChosenReading] = useState(false)
-  const [readingDeleted, setReadingDeleted] = useState(false)
-  const [editMode, setEditMode] = useState(false)
+  const [chosenMeter, setChosenMeter] = useState(false);
+  const [url, setUrl] = useState("");
+  const [modal, setModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [readingForMeter, setReadingForMeter] = useState(false);
+  const [chosenReading, setChosenReading] = useState(false);
+  const [readingDeleted, setReadingDeleted] = useState(false);
+  const [editMode, setEditMode] = useState(false);
 
   const handleMeterClick = (meter) => {
     //console.log(meter)
     if (!chosenMeter) {
-      setChosenMeter(meter)
-      setUrl(meter)
+      setChosenMeter(meter);
+      setUrl(meter);
     } else {
-      setChosenMeter(false)
-      setUrl("")
+      setChosenMeter(false);
+      setUrl("");
     }
-  }
+  };
 
   const handleAddNewReadingOrEdit = (meter, id) => {
-    setReadingForMeter(meter)
-    if(id) {
-      setChosenReading(id)
-      setEditMode(true)
+    setReadingForMeter(meter);
+    if (id) {
+      setChosenReading(id);
+      setEditMode(true);
     }
-    if(!id) {
-      setEditMode(false)
+    if (!id) {
+      setEditMode(false);
     }
-    setModal(true)
-  }
+    setModal(true);
+  };
 
   const closeModal = () => {
-    setModal(false)
-  }
+    setModal(false);
+  };
 
   const closeDeleteModal = () => {
-    setDeleteModal(false)
-  }
+    setDeleteModal(false);
+  };
 
   const openDeleteModal = (id) => {
-    setDeleteModal(true)
-    setChosenReading(id)
-  }
-  
+    setDeleteModal(true);
+    setChosenReading(id);
+  };
+
   const notifyReadingDelete = () => {
-    setReadingDeleted(true)
-  }
-  
-  useEffect(()=>{
-    if(readingDeleted) {
-      setReadingDeleted(false)
+    setReadingDeleted(true);
+  };
+
+  useEffect(() => {
+    if (readingDeleted) {
+      setReadingDeleted(false);
     }
-  }, [readingDeleted])
-  
+  }, [readingDeleted]);
 
   return (
-    <div className="">
-      <div className="grid grid-cols-9 p-2 text-teal-950 text-center border-b-gray-400 border-solid border font-bold">
+    <div className="shadow-md min-h-screen">
+      <div className="hidden lg:grid grid-cols-9 p-2 text-teal-950 border-b border-gray-500 text-center font-bold">
         <h4>Datums</h4>
         <h4>Rādījums</h4>
         <h4>Patēriņš</h4>
@@ -108,6 +107,6 @@ const ReadingContainer = () => {
         </>
       )}
     </div>
-  )
-}
-export default ReadingContainer
+  );
+};
+export default ReadingContainer;

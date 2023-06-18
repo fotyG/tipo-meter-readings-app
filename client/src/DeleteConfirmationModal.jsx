@@ -1,30 +1,33 @@
-import axios from "axios"
-import { useCookies } from "react-cookie"
+import axios from "axios";
+import { useCookies } from "react-cookie";
 
 const DeleteConfirmationModal = ({
   closeDeleteModal,
   chosenReading,
   notifyReadingDelete,
 }) => {
-  const [cookies, useCookie, removeCookie] = useCookies()
+  const [cookies, useCookie, removeCookie] = useCookies();
 
   const handleDelete = async (e, id) => {
-    e.preventDefault()
+    e.preventDefault();
     const deletedItem = await axios.delete(`readings/${id}`, {
       headers: {
         Authorization: `Bearer ${cookies.token}`,
       },
-    })
+    });
     if (deletedItem) {
-      notifyReadingDelete()
-      closeDeleteModal()
+      notifyReadingDelete();
+      closeDeleteModal();
     }
-  }
+  };
 
   return (
-    <div className="absolute bg-black bg-opacity-50 top-0 left-0 w-screen h-screen flex items-center justify-center">
-      <div className="relative bg-violet-50 bg-opacity-100 w-1/3 rounded-lg shadow-lg p-4 mb-20">
-        <button className="absolute top-0 right-3" onClick={closeDeleteModal}>
+    <div className="absolute bg-black bg-opacity-50 top-0 left-0 w-full min-h-screen flex items-center justify-center">
+      <div className="relative bg-slate-200 bg-opacity-100 w-3/4 sm:w-1/3 rounded-lg shadow-lg p-4 my-auto">
+        <button
+          className="absolute top-0 right-3"
+          onClick={closeDeleteModal}
+        >
           x
         </button>
         <div className="flex p-3 justify-center">
@@ -34,7 +37,7 @@ const DeleteConfirmationModal = ({
             </h3>
             <div className="flex justify-center gap-3">
               <button
-                className="block border border-teal-950 px-3 py-1 rounded-md text-teal-950 hover:bg-purple-300 transition-all shadow-md mt-3"
+                className="block border border-teal-950 px-3 py-1 rounded-md text-teal-950 hover:bg-rose-300 transition-all shadow-md mt-3"
                 onClick={(e) => handleDelete(e, chosenReading)}
               >
                 Dzēst
@@ -50,6 +53,6 @@ const DeleteConfirmationModal = ({
         </div>
       </div>
     </div>
-  )
-}
-export default DeleteConfirmationModal
+  );
+};
+export default DeleteConfirmationModal;
