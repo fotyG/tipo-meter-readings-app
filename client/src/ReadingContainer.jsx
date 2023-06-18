@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Reading from "./Reading";
 import Modal from "./Modal";
 import DeleteConfirmationModal from "./DeleteConfirmationModal";
+import Dialog from "./Dialog";
+import DeleteConfirmationDialog from "./DeleteConfirmationDialog";
 
 const ReadingContainer = () => {
   const [chosenMeter, setChosenMeter] = useState(false);
@@ -72,22 +74,38 @@ const ReadingContainer = () => {
         <h4>Skaitītāja Nr.</h4>
         <h4>Darbības</h4>
       </div>
-      {deleteModal && (
+      {/* {false && (
         <DeleteConfirmationModal
           closeDeleteModal={closeDeleteModal}
           chosenReading={chosenReading}
           readingForMeter={readingForMeter}
           notifyReadingDelete={notifyReadingDelete}
         />
-      )}
-      {modal && (
+      )} */}
+      <DeleteConfirmationDialog
+        deleteModal={deleteModal}
+        closeDeleteModal={closeDeleteModal}
+        chosenReading={chosenReading}
+        readingForMeter={readingForMeter}
+        notifyReadingDelete={notifyReadingDelete}
+      />
+
+      <Dialog
+        closeModal={closeModal}
+        modal={modal}
+        editMode={editMode}
+        chosenReading={chosenReading}
+        readingForMeter={readingForMeter}
+      />
+
+      {/* {false && (
         <Modal
           editMode={editMode}
           chosenReading={chosenReading}
           readingForMeter={readingForMeter}
           closeModal={closeModal}
         />
-      )}
+      )} */}
       {chosenMeter ? (
         <Reading
           url={url}
