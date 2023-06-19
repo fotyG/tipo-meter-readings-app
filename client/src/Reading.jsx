@@ -38,7 +38,7 @@ const Reading = ({
   };
 
   useEffect(() => {
-    const getReading = async (req, res) => {
+    const getReading = async () => {
       try {
         const response = await axios.get(`/meters/${url}`, {
           headers: {
@@ -92,10 +92,7 @@ const Reading = ({
           return (
             <div key={result._id}>
               {/* Mobile view */}
-              <div
-                // key={result._id}
-                className="w-64 sm:w-72 flex justify-between p-2 my-3 mx-auto border shadow-sm rounded-md bg-slate-50 lg:hidden"
-              >
+              <div className="w-64 sm:w-72 flex justify-between p-2 my-3 mx-auto border shadow-sm rounded-md bg-slate-50 lg:hidden">
                 <div className="p-3">
                   <p>Datums: {formattedDate}</p>
                   <p>Rādījums: {result.reading}</p>
@@ -167,7 +164,6 @@ const Reading = ({
               </div>
               {/* Big Screens under */}
               <div
-                // key={result._id}
                 className={
                   "hidden lg:grid grid-cols-9 p-2 text-teal-950 text-center hover:bg-slate-300 transition-all border-b " +
                   (odd ? "bg-slate-200" : "")
@@ -244,10 +240,7 @@ const Reading = ({
           return (
             <div key={meter._id}>
               {/* Mobile view */}
-              <div
-                // key={meter._id}
-                className="w-64 sm:w-72 flex justify-between p-2 my-3 mx-auto border shadow-sm rounded-md bg-slate-50 lg:hidden"
-              >
+              <div className="w-64 sm:w-72 flex justify-between p-2 my-3 mx-auto border shadow-sm rounded-md bg-slate-50 lg:hidden">
                 <div className="p-3">
                   <p>Datums: {formattedDate}</p>
                   <p>Rādījums: {meter.readings[0].reading}</p>
@@ -324,7 +317,6 @@ const Reading = ({
 
               {/* Big screens under */}
               <div
-                // key={meter._id}
                 className={
                   "hidden lg:grid grid-cols-9 p-2 text-teal-950 text-center hover:bg-slate-300 transition-all border-b " +
                   (odd ? "bg-slate-200" : "")

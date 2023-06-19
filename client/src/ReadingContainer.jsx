@@ -16,7 +16,6 @@ const ReadingContainer = () => {
   const [editMode, setEditMode] = useState(false);
 
   const handleMeterClick = (meter) => {
-    //console.log(meter)
     if (!chosenMeter) {
       setChosenMeter(meter);
       setUrl(meter);

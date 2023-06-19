@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router";
 
+let url;
+let axiosUrl;
+
 const Dialog = ({
   modal,
   closeModal,
@@ -22,19 +25,15 @@ const Dialog = ({
   const [cookies, setCookie, removeCookie] = useCookies();
   const navigate = useNavigate();
 
-  let url;
-  let axiosUrl;
-
-  if (editMode) {
-    url = `readings/${chosenReading}`;
-    axiosUrl = `/readings/${chosenReading}`;
-  } else {
-    url = `meters/${readingForMeter}`;
-    axiosUrl = "/readings";
-  }
-
   useEffect(() => {
     const fetchReadingData = async () => {
+      if (editMode) {
+        url = `readings/${chosenReading}`;
+        axiosUrl = `/readings/${chosenReading}`;
+      } else {
+        url = `meters/${readingForMeter}`;
+        axiosUrl = "/readings";
+      }
       try {
         const response = await axios.get(`${url}`, {
           headers: {
@@ -58,11 +57,12 @@ const Dialog = ({
         }
       }
     };
+
     if (modal) {
+      fetchReadingData();
       window.modal.showModal();
     }
-    fetchReadingData();
-  }, [url, modal]);
+  }, [modal]);
 
   const handleReadingChange = (e) => {
     const newReading = e.target.value;
@@ -72,6 +72,7 @@ const Dialog = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       if (editMode) {
         const request = await axios.patch(
